@@ -1,0 +1,4 @@
+repository "floppying_bird@hzzzx_1127@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
