@@ -26,6 +26,8 @@ public class SerialManager : MonoBehaviour
         isRunning = true;
         readThread = new Thread(ReadSerial);
         readThread.Start();
+       // UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+
     }
 
     void ReadSerial()

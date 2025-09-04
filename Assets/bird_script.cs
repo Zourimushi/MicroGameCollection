@@ -65,8 +65,11 @@ public class bird_script : MonoBehaviour
 
     public void Dead()
     {
+        if (!birdIsAlive) return;         
+
         birdIsAlive = false;
         birdControls.bird.jump.performed -= Onjump;
         logic.gameOver();
+        SerialManager.Instance?.SendBytes(new byte[] { 0xFF, 0xFF });
     }
 }

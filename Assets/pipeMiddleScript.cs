@@ -23,7 +23,14 @@ public class pipeMiddleScript : MonoBehaviour
         if(collision.gameObject.layer==3 && bird.birdIsAlive==true)
         {
             logic.addScore(1);
-            SerialManager.Instance?.SendByte(0x01);
+
+            int score = logic.playerScore;
+            byte scoreByte = (byte)(score & 0xFF);
+
+            byte[] packet = new byte[] { 0x01, scoreByte };
+
+            SerialManager.Instance?.SendBytes(packet);
+
 
         }
 

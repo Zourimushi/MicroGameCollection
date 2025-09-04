@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Logic
   - bird
+  - Reward
+  - Obstacle
   layers:
   - Default
   - TransparentFX
