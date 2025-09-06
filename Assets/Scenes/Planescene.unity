@@ -1057,6 +1057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startButton: {fileID: 1403235951}
   quitButton: {fileID: 365883793}
+  gameOverScreen: {fileID: 1735545191}
 --- !u!4 &1521488611
 Transform:
   m_ObjectHideFlags: 0
@@ -1306,7 +1307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1917591717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,7 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97476dc142af02b4fb8149c2d6db1015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastCommand: 0
+  lastCommand: 255
 --- !u!4 &1917591718
 Transform:
   m_ObjectHideFlags: 0

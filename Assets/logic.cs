@@ -18,6 +18,6 @@ public class logic : MonoBehaviour
     }
     public void start()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("ChooseScene");
     }
 }

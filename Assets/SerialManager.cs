@@ -10,7 +10,7 @@ public class SerialManager : MonoBehaviour
     Thread readThread;
     bool isRunning = false;
 
-    public byte lastCommand = 0;  // 保存单片机发来的最后一个字节
+    public byte lastCommand = 0XFF;  // 保存单片机发来的最后一个字节
 
     void Awake()
     {
@@ -26,7 +26,7 @@ public class SerialManager : MonoBehaviour
         isRunning = true;
         readThread = new Thread(ReadSerial);
         readThread.Start();
-       // UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("startScene");
 
     }
 
@@ -36,15 +36,17 @@ public class SerialManager : MonoBehaviour
         {
             try
             {
-                int bytesToRead = serialPort.BytesToRead;
-                if (bytesToRead > 0)
+                if (serialPort.BytesToRead > 0)
                 {
-                    byte[] buffer = new byte[bytesToRead];
-                    serialPort.Read(buffer, 0, bytesToRead);
-                    lastCommand = buffer[0]; // 假设单片机一次发1字节
+                    int data = serialPort.ReadByte(); // 直接读一个字节
+                    lastCommand = (byte)data;        // 保存到 lastCommand
+                    Debug.Log("Serial Data Received: 0x" + data.ToString("X2"));
                 }
             }
-            catch { }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning("Serial read error: " + ex.Message);
+            }
         }
     }
 
@@ -62,6 +64,13 @@ public class SerialManager : MonoBehaviour
                 Debug.LogError("串口发送失败: " + e.Message);
             }
         }
+    }
+
+    public byte GetCommand()
+    {
+        byte cmd = lastCommand;
+        lastCommand = 0XFF; // 清空
+        return cmd;
     }
 
     public void SendBytes(byte[] data)
@@ -91,4 +100,27 @@ public class SerialManager : MonoBehaviour
             Debug.Log("串口已关闭");
         }
     }
+
+    void OnDisable()
+    {
+        StopSerial();
+    }
+
+    void OnDestroy()
+    {
+        StopSerial();
+    }
+
+    private void StopSerial()
+    {
+        isRunning = false;
+        if (readThread != null && readThread.IsAlive)
+            readThread.Join();
+
+        if (serialPort != null && serialPort.IsOpen)
+            serialPort.Close();
+
+        Debug.Log("串口与线程已停止");
+    }
+
 }

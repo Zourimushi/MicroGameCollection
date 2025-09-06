@@ -35,10 +35,12 @@ public class bird_script : MonoBehaviour
         if (SerialManager.Instance != null)
         {
             byte cmd = SerialManager.Instance.lastCommand;
-            if (cmd == 0x01 && birdIsAlive)  // 假设单片机发0x01表示跳跃
+            //Debug.Log("Received Serial Command: 0x" + cmd.ToString("X2"));
+
+            if (cmd == 0x11 && birdIsAlive)  // 假设单片机发0x01表示跳跃
             {
                 Flap();
-                SerialManager.Instance.lastCommand = 0; // 消费掉，避免重复触发
+                SerialManager.Instance.lastCommand = 0XFF; // 消费掉，避免重复触发
             }
         }
 

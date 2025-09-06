@@ -31,6 +31,8 @@ public class moveBirdScript : MonoBehaviour
         {
             byte cmd = SerialManager.Instance.lastCommand;
 
+            // 打印接收到的串口数据
+           // Debug.Log("Received Serial Command: 0x" + cmd.ToString("X2"));
             switch (cmd)
             {
                 case 0x01: movedirection = Vector2.up; break;
@@ -41,7 +43,8 @@ public class moveBirdScript : MonoBehaviour
                 case 0x05: movedirection = new Vector2(1, 1).normalized; break;  // 右上
                 case 0x07: movedirection = new Vector2(-1, -1).normalized; break;// 左下
                 case 0x06: movedirection = new Vector2(1, -1).normalized; break; // 右下
-                default: movedirection = Vector2.zero; break;
+                case 0x00: movedirection = Vector2.zero; break; // 不动
+                default: break;
             }
         }
        // movedirection = bird_control.ReadValue<Vector2>();
